@@ -1,10 +1,6 @@
 package policy
 
-import (
-	"errors"
-	"fmt"
-	"strings"
-)
+import "fmt"
 
 var Policies = [...]Policy{
 	{
@@ -30,14 +26,4 @@ type Policy struct {
 
 func (p Policy) FullEndpointURL() string {
 	return fmt.Sprintf("%s:%d%s", p.EndpointFQDN, p.EndpointPort, p.EndpointPath)
-}
-
-func FindWithRoutingPath(path string) (Policy, error) {
-	for _, p := range Policies {
-		if strings.HasPrefix(path, p.RoutingPath) {
-			return p, nil
-		}
-	}
-
-	return Policy{}, errors.New("Policy not found for the given RoutingPath")
 }
