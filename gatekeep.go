@@ -6,6 +6,7 @@ import (
 	"log"
 	"musa11971/gatekeep/policy"
 	"net/http"
+	"time"
 
 	"github.com/fatih/color"
 	"github.com/gorilla/mux"
@@ -35,7 +36,9 @@ func main() {
 
 func RouteToEndpointHandler(policy policy.Policy, w http.ResponseWriter, r *http.Request) {
 	// Create the request to the endpoint
-	client := &http.Client{}
+	client := &http.Client{
+		Timeout: time.Second * time.Duration(policy.EndpointReadTimeout),
+	}
 
 	method := r.Method
 	url := policy.FullEndpointURL()
