@@ -19,7 +19,7 @@ func main() {
 
 	go registerPolicyRoutes(r)
 
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "No policy found.")
 	})
 
