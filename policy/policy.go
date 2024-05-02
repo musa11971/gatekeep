@@ -3,6 +3,7 @@ package policy
 import (
 	"errors"
 	"fmt"
+	"strings"
 )
 
 var Policies = [...]Policy{
@@ -33,7 +34,7 @@ func (p Policy) FullEndpointURL() string {
 
 func FindWithRoutingPath(path string) (Policy, error) {
 	for _, p := range Policies {
-		if p.RoutingPath == path {
+		if strings.HasPrefix(path, p.RoutingPath) {
 			return p, nil
 		}
 	}
