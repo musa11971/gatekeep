@@ -17,6 +17,7 @@ func ForwardToPolicyHandler(policy policy.Policy, w http.ResponseWriter, r *http
 	url := policy.FullEndpointURL()
 
 	req, _ := http.NewRequest(method, url, nil)
+	req.Header = r.Header
 	response, _ := client.Do(req)
 
 	// Copy headers

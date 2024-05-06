@@ -17,6 +17,13 @@ var Policies = [...]Policy{
 		EndpointPort:        443,
 		EndpointPath:        "/api/planets",
 	},
+	{
+		RoutingPath:         "/Google",
+		EndpointReadTimeout: 5,
+		EndpointFQDN:        "https://google.com",
+		EndpointPort:        443,
+		EndpointPath:        "/",
+	},
 }
 
 type Policy struct {
