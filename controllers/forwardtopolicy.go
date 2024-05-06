@@ -8,17 +8,7 @@ import (
 )
 
 func ForwardToPolicyHandler(policy policy.Policy, w http.ResponseWriter, r *http.Request) {
-	// Create the request to the endpoint
-	client := &http.Client{
-		Timeout: time.Second * time.Duration(policy.EndpointReadTimeout),
-	}
-
-	method := r.Method
-	url := policy.FullEndpointURL()
-
-	req, _ := http.NewRequest(method, url, nil)
-	req.Header = r.Header
-	response, _ := client.Do(req)
+	response, _ := performRequestToEndpoint(policy, r)
 
 	// Copy headers
 	for key, values := range response.Header {
@@ -37,4 +27,19 @@ func ForwardToPolicyHandler(policy policy.Policy, w http.ResponseWriter, r *http
 		http.Error(w, error.Error(), http.StatusInternalServerError)
 		return
 	}
+}
+
+func performRequestToEndpoint(policy policy.Policy, incomingRequest *http.Request) (*http.Response, error) {
+	client := &http.Client{
+		Timeout: time.Second * time.Duration(policy.EndpointReadTimeout),
+	}
+
+	req, _ := http.NewRequest(
+		incomingRequest.Method,
+		policy.FullEndpointURL(),
+		nil,
+	)
+	req.Header = incomingRequest.Header
+
+	return client.Do(req)
 }
