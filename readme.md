@@ -1,3 +1,5 @@
+<p align="center"><img src=".github/gatekeep.png" width="200"></p>
+
 # Gatekeep
 Gatekeep is a proof of concept API gateway written in Go. By acting as a single entry point for all client requests, Gatekeep aims to provide a centralized solution for controlling access, enforcing security policies, and so forth.
 
